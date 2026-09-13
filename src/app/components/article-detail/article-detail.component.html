@@ -1,0 +1,41 @@
+<div class="article-detail-page" *ngIf="article; else notFound">
+  <h2>{{ article.title }}</h2>
+  <p class="meta">
+    by {{ article.authorUsername }} · {{ article.createdAt | date:'medium' }}
+    · <span [class.draft]="article.status === 'DRAFT'">{{ article.status }}</span>
+  </p>
+
+  <p class="description">{{ article.description }}</p>
+  <div class="content">{{ article.content }}</div>
+
+  <div class="owner-actions" *ngIf="isOwner()">
+    <a [routerLink]="['/my-articles', article.id, 'edit']">Edit</a>
+    <button *ngIf="article.status === 'DRAFT'" (click)="publish()">Publish</button>
+    <button (click)="deleteArticle()">Delete</button>
+  </div>
+
+  <hr />
+
+  <h3>Comments ({{ comments.length }})</h3>
+
+  <div class="comment" *ngFor="let comment of comments">
+    <p>{{ comment.text }}</p>
+    <span class="meta">
+      {{ comment.authorUsername }} · {{ comment.createdAt | date:'short' }}
+      <button *ngIf="canDeleteComment(comment)" (click)="deleteComment(comment.id)">Delete</button>
+    </span>
+  </div>
+
+  <div class="add-comment" *ngIf="auth.isLoggedIn(); else loginToComment">
+    <textarea [(ngModel)]="newCommentText" placeholder="Add a comment..."></textarea>
+    <button (click)="addComment()" [disabled]="!newCommentText.trim()">Post Comment</button>
+  </div>
+
+  <ng-template #loginToComment>
+    <p><a routerLink="/login">Login</a> to comment.</p>
+  </ng-template>
+</div>
+
+<ng-template #notFound>
+  <p class="error">{{ errorMessage || 'Loading...' }}</p>
+</ng-template>

@@ -1,0 +1,26 @@
+<div class="article-form-page">
+  <h2>{{ isEditMode ? 'Edit Article' : 'New Article' }}</h2>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <label>
+      Title
+      <input formControlName="title" type="text" />
+    </label>
+
+    <label>
+      Description
+      <input formControlName="description" type="text" />
+    </label>
+
+    <label>
+      Content
+      <textarea formControlName="content" rows="10"></textarea>
+    </label>
+
+    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+    <button type="submit" [disabled]="form.invalid">
+      {{ isEditMode ? 'Save Changes' : 'Create Article' }}
+    </button>
+  </form>
+</div>

@@ -1,0 +1,8 @@
+<div class="user-list-page">
+  <h2>Users</h2>
+
+  <div class="user-row" *ngFor="let user of users">
+    <a [routerLink]="['/articles']" [queryParams]="{ author: user.id }">{{ user.username }}</a>
+    <span *ngIf="user.fullName">({{ user.fullName }})</span>
+  </div>
+</div>

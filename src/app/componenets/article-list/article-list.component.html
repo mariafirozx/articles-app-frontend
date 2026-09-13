@@ -1,0 +1,31 @@
+<div class="article-list-page">
+  <h2>Articles</h2>
+
+  <div class="filters">
+    <select [(ngModel)]="selectedAuthor" (ngModelChange)="onFilterChange()">
+      <option [ngValue]="null">All authors</option>
+      <option *ngFor="let user of users" [ngValue]="user.id">{{ user.username }}</option>
+    </select>
+
+    <input
+      type="text"
+      placeholder="Search title or content..."
+      [(ngModel)]="contentQuery"
+      (ngModelChange)="onFilterChange()"
+    />
+
+    <button (click)="clearFilters()">Clear</button>
+  </div>
+
+  <div class="article-grid" *ngIf="articles.length; else noArticles">
+    <a *ngFor="let article of articles" [routerLink]="['/articles', article.id]" class="article-card">
+      <h3>{{ article.title }}</h3>
+      <p>{{ article.description }}</p>
+      <span class="meta">by {{ article.authorUsername }} · {{ article.createdAt | date:'mediumDate' }}</span>
+    </a>
+  </div>
+
+  <ng-template #noArticles>
+    <p>No articles found.</p>
+  </ng-template>
+</div>

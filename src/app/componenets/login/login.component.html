@@ -1,0 +1,21 @@
+<div class="auth-form">
+  <h2>Login</h2>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <label>
+      Username
+      <input formControlName="username" type="text" />
+    </label>
+
+    <label>
+      Password
+      <input formControlName="password" type="password" />
+    </label>
+
+    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+    <button type="submit" [disabled]="form.invalid">Login</button>
+  </form>
+
+  <p>No account? <a routerLink="/register">Register</a></p>
+</div>
